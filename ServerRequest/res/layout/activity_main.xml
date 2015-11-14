@@ -1,0 +1,68 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/promptText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/pingLocation"
+        android:layout_alignBottom="@+id/pingLocation"
+        android:layout_alignParentLeft="true"
+        android:text="@string/prompt" />
+
+    <EditText
+        android:id="@+id/pingLocation"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/promptText"
+        android:inputType="textUri" />
+
+    <Button
+        android:id="@+id/getStory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/pingLocation"
+        android:onClick="getStory"
+        android:text="@string/get_story"
+        android:textSize="12sp" />
+    
+    <Button
+        android:id="@+id/getAllStories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/getStory"
+        android:onClick="getAllStories"
+        android:text="@string/get_all_stories"
+        android:textSize="12sp" />
+    <Button
+        android:id="@+id/send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/getAllStories"
+        android:onClick="store"
+        android:text="@string/send"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/jsonDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/getAllStories"
+        android:lines="3"
+        android:ellipsize="end"
+        android:text="" />
+    
+     <TextView
+        android:id="@+id/storyNumDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/jsonDisplay"
+        android:text="" />
+     
+
+</RelativeLayout>

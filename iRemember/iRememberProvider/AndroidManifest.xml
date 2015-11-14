@@ -1,0 +1,100 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="edu.vanderbilt.mooc.mooc_cp"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <!-- Sync Adapter Permissions: START -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <!-- Sync Adapter Permissions: END -->
+    
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+
+
+    <!-- Google Cloud Messaging Permissions: START -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <permission android:name="edu.vanderbilt.mooc.mooc_cp.permission.C2D_MESSAGE" />
+
+    <uses-permission android:name="edu.vanderbilt.mooc.mooc_cp.permission.C2D_MESSAGE" />
+    <!-- Google Cloud Messaging Permissions: END -->
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="18"
+        tools:ignore="OldTargetApi" />
+
+    <application
+        android:name="edu.vuum.mocca.main.ApplicationConstantCreator"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+
+        <!-- Content Provider -->
+        <provider
+            android:name="edu.vuum.mocca.provider.MoocProvider"
+            android:authorities="@string/authority"
+            android:exported="true"
+            tools:ignore="ExportedContentProvider" >
+        </provider>
+
+        <!-- Sync Adapter: Start -->
+        <!-- Sync Adapter Service -->
+        <service
+            android:name="edu.vuum.mocca.provider.sync.SyncAdapterService"
+            android:exported="true"
+            android:process=":sync" >
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/syncadapter" />
+        </service>
+        <!-- Sync Adapter: END -->
+
+
+        <!-- Account Authentication START -->
+        <!-- Service to handle authentication related requests -->
+        <service android:name="edu.vuum.mocca.authentication.AccountAuthenticatorService" >
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
+
+        <!-- Activities to display to User for Authentication Topics -->
+        <activity android:name="edu.vuum.mocca.authentication.AccountLoginActivity" />
+        <activity android:name="edu.vuum.mocca.authentication.AccountCreateActivity" />
+        <!-- Account Authentication: END -->
+
+
+        <!-- Google Cloud Messaging: START -->
+        <!-- This is only here for future reference, use, not complete -->
+        <receiver
+            android:name="edu.vuum.mocca.network.CloudMessagingBroadcastReciever"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+             android:process=":sync"
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="edu.vanderbilt.mooc.mooc_cp" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="edu.vuum.mocca.network.GcmIntentService" />
+        <!-- Google Cloud Messaging: END -->
+
+    </application>
+
+</manifest>
